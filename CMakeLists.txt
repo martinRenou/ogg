@@ -139,6 +139,18 @@ if(INSTALL_CMAKE_PACKAGE_MODULE)
 
     include(CMakePackageConfigHelpers)
 
+    # For a build tree
+    set(OGG_CONFIG_CODE "####### Expanded from \@OGG_CONFIG_CODE\@ #######\n")
+    set(OGG_CONFIG_CODE "${OGG_CONFIG_CODE}set(CMAKE_MODULE_PATH \"${CMAKE_CURRENT_SOURCE_DIR}/cmake;\${CMAKE_MODULE_PATH}\")\n")
+    set(OGG_CONFIG_CODE "${OGG_CONFIG_CODE}##################################################")
+    configure_package_config_file(
+        ${PROJECT_SOURCE_DIR}/cmake/OggConfig.cmake.in
+        ${CMAKE_CURRENT_BINARY_DIR}/OggConfig.cmake
+        INSTALL_DESTINATION ${PROJECT_BINARY_DIR}
+    )
+
+    # For an install tree
+    set(OGG_CONFIG_CODE "")
     configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/OggConfig.cmake.in ${PROJECT_BINARY_DIR}/OggConfig.cmake
         INSTALL_DESTINATION ${CMAKE_INSTALL_CONFIGDIR}
         PATH_VARS CMAKE_INSTALL_FULL_INCLUDEDIR
